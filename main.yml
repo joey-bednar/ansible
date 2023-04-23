@@ -1,0 +1,21 @@
+- hosts: localhost
+  vars:
+    home_dir: "{{ lookup('env', 'HOME') }}"
+  pre_tasks:
+    - name: Update cache
+      become: true
+      apt:
+        force_apt_get: true
+        update-cache: true
+        state: present
+      tags:
+        - zsh
+        - nvim
+        - dotfiles
+  tasks:
+    - include: tasks/core.yml
+    - include: tasks/zsh.yml
+    - include: tasks/tmux.yml
+    - include: tasks/nvim.yml
+    - include: tasks/dotfiles.yml
+    - include: tasks/plugins.yml

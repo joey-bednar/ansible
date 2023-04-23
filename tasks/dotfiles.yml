@@ -1,0 +1,18 @@
+- name: Download dotfiles
+  git:
+    repo: https://github.com/joey-bednar/dotfiles
+    dest: "{{ home_dir }}/dotfiles"
+    clone: yes
+    update: yes
+  tags:
+    - dotfiles
+
+- name: Create symlinks
+  shell: |
+    rm {{ home_dir }}/.zshrc
+    rm {{ home_dir }}/.tmux.conf
+    cd {{ home_dir }}/dotfiles
+    stow .
+  tags:
+    - dotfiles
+

@@ -1,0 +1,32 @@
+- name: Install zsh
+  become: true
+  apt: name=zsh
+  tags:
+    - zsh
+- name: Install ohmyzsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  tags:
+    - zsh
+- name: Change shell
+  become: true
+  shell: chsh -s `which zsh`
+  tags:
+    - zsh
+
+- name: Install zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+    dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
+    clone: yes
+    update: yes
+  tags:
+    - zsh
+
+- name: Install zsh-syntax-highlighting
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+    dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+    clone: yes
+    update: yes
+  tags:
+    - zsh

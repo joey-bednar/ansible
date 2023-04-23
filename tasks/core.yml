@@ -1,0 +1,13 @@
+- name: Install System Packages 1 (npm,unzip,ripgrep)
+  become: true
+  apt:
+    name: ["ripgrep","npm","unzip"]
+  tags:
+    - nvim
+      
+- name: Install System Packages 2 (stow,fzf)
+  become: true
+  apt:
+    name: ["stow","fzf"]
+  tags:
+    - dotfiles

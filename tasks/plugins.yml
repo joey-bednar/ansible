@@ -1,0 +1,13 @@
+- name: Install Neovim Plugins
+  shell: nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+  tags:
+    - nvim
+
+- name: Install Tmux Plugins
+  shell: |
+    tmux start-server
+    tmux new-session -d
+    {{ home_dir }}/.tmux/plugins/tpm/scripts/install_plugins.sh
+    tmux kill-server
+  tags:
+    - tmux
