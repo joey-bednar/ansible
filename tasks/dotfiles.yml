@@ -7,12 +7,25 @@
   tags:
     - dotfiles
 
+- name: Load kitty.conf
+  shell: |
+    bash {{home_dir}}/dotfiles/setup
+  tags:
+    - dotfiles
+
 - name: Create symlinks
   shell: |
     rm {{ home_dir }}/.zshrc
     rm {{ home_dir }}/.tmux.conf
     cd {{ home_dir }}/dotfiles
     stow .
+  tags:
+    - dotfiles
+
+
+- name: Reload fonts
+  shell: |
+    fc-cache -f -v
   tags:
     - dotfiles
 

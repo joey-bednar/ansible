@@ -5,9 +5,9 @@
   tags:
     - nvim
       
-- name: Install System Packages 2 (stow,fzf)
+- name: Install System Packages 2 (stow,fzf,i3,picom)
   become: true
   apt:
-    name: ["stow","fzf"]
+    name: ["stow","fzf","i3","picom"]
   tags:
     - dotfiles

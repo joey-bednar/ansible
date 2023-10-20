@@ -3,6 +3,7 @@
   apt: name=zsh
   tags:
     - zsh
+
 - name: Install ohmyzsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   tags:

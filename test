@@ -1,4 +1,4 @@
 #!/bin/bash
 
 docker build -t "ansible" .
-docker run --rm -it ansible bash -c "ansible-playbook ../main.yml -K;bash"
+docker run --rm -it ansible
