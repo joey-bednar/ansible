@@ -1,5 +1,5 @@
 - name: Install Neovim Plugins
-  shell: nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+  shell: nvim --headless "+Lazy! sync" +qa
   tags:
     - nvim
 
