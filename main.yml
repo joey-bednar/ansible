@@ -1,6 +1,10 @@
-- hosts: localhost
+---
+- name: Install Development Environment
+  hosts: localhost
+  connection: local
   vars:
     home_dir: "{{ lookup('env', 'HOME') }}"
+    username: "{{ lookup('env', 'USER') }}"
   pre_tasks:
     - name: Update cache
       become: true

@@ -1,7 +1,7 @@
-- name: Install System Packages 1 (npm,unzip,ripgrep)
+- name: Install System Packages 1 (npm,unzip,ripgrep,curl)
   become: true
   apt:
-    name: ["ripgrep","npm","unzip"]
+    name: ["ripgrep","npm","unzip","curl"]
   tags:
     - nvim
       

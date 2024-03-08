@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 sudo apt install ansible -y
-sudo ansible-playbook main.yml -K
+ansible-playbook main.yml -i localhost, -K

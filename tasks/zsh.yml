@@ -6,11 +6,16 @@
 
 - name: Install ohmyzsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  args:
+    creates: "{{ home_dir }}/.oh-my-zsh"
   tags:
     - zsh
+
 - name: Change shell
+  user:
+    name: "{{ username }}"
+    shell: "/usr/bin/zsh"
   become: true
-  shell: chsh -s `which zsh`
   tags:
     - zsh
 
