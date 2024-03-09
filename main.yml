@@ -16,6 +16,8 @@
         - zsh
         - nvim
         - dotfiles
+        - gnome
+        - docker
   tasks:
     - include: tasks/core.yml
     - include: tasks/dotfiles.yml
@@ -23,3 +25,5 @@
     - include: tasks/tmux.yml
     - include: tasks/nvim.yml
     - include: tasks/plugins.yml
+    - include: tasks/gnome.yml
+    - include: tasks/docker.yml

@@ -6,6 +6,7 @@
       - npm
       - unzip
       - curl
+      - ca-certificates
     state: present
   tags:
     - nvim

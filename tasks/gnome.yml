@@ -1,0 +1,8 @@
+- name: Set Wallpaper
+  gsettings:
+    schema: org.gnome.desktop.background
+    key: picture-uri
+    value: "{{ home_dir }}/ansible/ubuntu-background.jpg"
+  tags:
+    - gnome
+  when: ansible_facts["distribution"] == "Ubuntu"
