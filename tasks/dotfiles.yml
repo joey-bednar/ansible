@@ -4,6 +4,7 @@
     dest: "{{ home_dir }}/dotfiles"
     clone: yes
     update: yes
+    force: yes
   tags:
     - dotfiles
   when: ansible_facts["distribution"] == "Ubuntu"

@@ -12,6 +12,7 @@
   become: true
   shell: |
     mv {{ home_dir }}/squashfs-root /
+    rm /usr/bin/nvim
     ln -s /squashfs-root/AppRun /usr/bin/nvim
   tags:
     - nvim
