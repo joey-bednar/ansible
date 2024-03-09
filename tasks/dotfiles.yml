@@ -13,7 +13,7 @@
   tags:
     - dotfiles
 
-- name: Create symlinks
+- name: Stow dotfiles
   shell: |
     rm {{ home_dir }}/.zshrc
     rm {{ home_dir }}/.tmux.conf
@@ -21,7 +21,6 @@
     stow .
   tags:
     - dotfiles
-
 
 - name: Reload fonts
   shell: |

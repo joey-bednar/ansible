@@ -1,13 +1,23 @@
-- name: Install System Packages 1 (npm,unzip,ripgrep,curl)
+- name: Install Core Utilities
   become: true
   apt:
-    name: ["ripgrep","npm","unzip","curl"]
+    name:
+      - ripgrep
+      - npm
+      - unzip
+      - curl
+    state: present
   tags:
     - nvim
       
-- name: Install System Packages 2 (stow,fzf,i3,picom)
+- name: Install Core Utilities
   become: true
   apt:
-    name: ["stow","fzf","i3","picom"]
+    name:
+      - stow
+      - fzf
+      - i3
+      - picom
+    state: present
   tags:
     - dotfiles

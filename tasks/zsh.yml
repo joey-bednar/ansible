@@ -11,7 +11,7 @@
   tags:
     - zsh
 
-- name: Change shell
+- name: Set zsh to default shell
   user:
     name: "{{ username }}"
     shell: "/usr/bin/zsh"
