@@ -2,6 +2,7 @@
   shell: nvim --headless "+Lazy! sync" +qa
   tags:
     - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Tmux Plugins
   shell: |
@@ -11,3 +12,4 @@
     tmux kill-server
   tags:
     - tmux
+  when: ansible_facts["distribution"] == "Ubuntu"

@@ -6,6 +6,7 @@
     ~/nvim.appimage --appimage-extract
   tags:
     - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Expose Nvim globally
   become: true
@@ -14,3 +15,4 @@
     ln -s /squashfs-root/AppRun /usr/bin/nvim
   tags:
     - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"

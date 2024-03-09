@@ -6,12 +6,14 @@
     update: yes
   tags:
     - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Load kitty.conf
   shell: |
     bash {{home_dir}}/dotfiles/setup
   tags:
     - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Stow dotfiles
   shell: |
@@ -21,10 +23,12 @@
     stow .
   tags:
     - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Reload fonts
   shell: |
     fc-cache -f -v
   tags:
     - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
 

@@ -10,6 +10,7 @@
     creates: "{{ home_dir }}/.oh-my-zsh"
   tags:
     - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Set zsh to default shell
   user:
@@ -18,6 +19,7 @@
   become: true
   tags:
     - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install zsh-autosuggestions
   git:
@@ -27,6 +29,7 @@
     update: yes
   tags:
     - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install zsh-syntax-highlighting
   git:
@@ -36,3 +39,17 @@
     update: yes
   tags:
     - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if dotfiles exists
+  stat:
+    path: "{{ home_dir }}/dotfiles"
+  register: dotfiles_status
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Use dotfiles .zshrc
+  shell: |
+    rm {{ home_dir }}/.zshrc
+    cd {{ home_dir }}/dotfiles
+    stow .
+  when: dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"

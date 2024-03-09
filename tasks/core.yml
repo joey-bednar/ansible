@@ -9,6 +9,7 @@
     state: present
   tags:
     - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"
       
 - name: Install Core Utilities
   become: true
@@ -21,3 +22,4 @@
     state: present
   tags:
     - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
