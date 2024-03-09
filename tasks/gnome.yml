@@ -1,6 +1,13 @@
-- name: Set Wallpaper
+- name: Set wallpaper
   shell: |
     gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/ubuntu-background.jpg
+  tags:
+    - gnome
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Set favorite apps
+  shell: |
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','org.gnome.Terminal.desktop']"
   tags:
     - gnome
   when: ansible_facts["distribution"] == "Ubuntu"
