@@ -27,4 +27,4 @@
     mv {{ home_dir }}/anaconda3/bin/clear {{ home_dir }}/anaconda3/bin/clear_old
   tags:
     - python
-  when: anaconda_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not anaconda_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
