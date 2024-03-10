@@ -20,6 +20,7 @@
         - docker
         - kitty
         - i3
+        - python
   tasks:
     - include: tasks/core.yml
     - include: tasks/dotfiles.yml
@@ -28,3 +29,4 @@
     - include: tasks/nvim.yml
     - include: tasks/gnome.yml
     - include: tasks/docker.yml
+    - include: tasks/python.yml
