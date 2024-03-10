@@ -1,3 +1,14 @@
+- name: Install Dependencies
+  become: true
+  apt:
+    name:
+      - curl
+      - ca-certificates
+    state: present
+  tags:
+    - docker
+  when: ansible_facts["distribution"] == "Ubuntu"
+
 - name: Add Docker official GPG key
   become: true
   shell: |

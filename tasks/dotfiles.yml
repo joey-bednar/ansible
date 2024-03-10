@@ -1,3 +1,14 @@
+- name: Install dotfiles dependencies
+  become: true
+  apt:
+    name:
+      - fzf
+      - stow
+    state: present
+  tags:
+    - dotfiles
+  when: ansible_facts["distribution"] == "Ubuntu"
+
 - name: Download dotfiles
   git:
     repo: https://github.com/joey-bednar/dotfiles
@@ -33,3 +44,14 @@
     - dotfiles
   when: ansible_facts["distribution"] == "Ubuntu"
 
+- name: Create personal directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/personal"
+    state: directory
+    mode: '0755'
+
+- name: Create work directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/work"
+    state: directory
+    mode: '0755'

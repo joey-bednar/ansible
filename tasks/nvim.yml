@@ -1,3 +1,14 @@
+- name: Install nvim dependencies
+  become: true
+  apt:
+    name:
+      - ripgrep
+      - npm
+      - curl
+      - cargo
+    state: present
+  when: ansible_facts["distribution"] == "Ubuntu"
+
 - name: Install Nvim
   shell: |
     curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o {{ home_dir }}/nvim.appimage
@@ -17,3 +28,10 @@
   tags:
     - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install Neovim Plugins
+  shell: nvim --headless "+Lazy! sync" +qa
+  tags:
+    - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"
+

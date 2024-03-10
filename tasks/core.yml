@@ -1,26 +1,30 @@
-- name: Install Core Utilities
+- name: Install Packages
   become: true
   apt:
     name:
-      - ripgrep
-      - npm
       - unzip
       - curl
       - ca-certificates
     state: present
-  tags:
-    - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
       
-- name: Install Core Utilities
+- name: Install i3
   become: true
   apt:
     name:
-      - stow
-      - fzf
       - i3
       - picom
     state: present
   tags:
-    - dotfiles
+    - i3
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Install kitty
+  become: true
+  apt:
+    name:
+      - kitty
+    state: present
+  tags:
+    - kitty
   when: ansible_facts["distribution"] == "Ubuntu"
