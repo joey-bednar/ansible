@@ -25,8 +25,19 @@
     ./anaconda.sh -b -p {{ home_dir }}/anaconda3
     ln -s {{ home_dir }}/anaconda3/bin/conda /usr/bin/conda
     mv {{ home_dir }}/anaconda3/bin/clear {{ home_dir }}/anaconda3/bin/clear_old
-    conda config --set auto_activate_base false
-    conda deactivate
   tags:
     - python
   when: not anaconda_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if dotfiles exists
+  stat:
+    path: "{{ home_dir }}/dotfiles"
+  register: dotfiles_status
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Use dotfiles .condarc
+  shell: |
+    rm {{ home_dir }}/.condarc
+    cd {{ home_dir }}/dotfiles
+    stow .
+  when: not anaconda_status.stat.exists and dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
