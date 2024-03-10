@@ -9,6 +9,8 @@
       - cargo
       - python3.10-venv
     state: present
+  tags:
+    - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Nvim

@@ -33,6 +33,8 @@
   stat:
     path: "{{ home_dir }}/dotfiles"
   register: dotfiles_status
+  tags:
+    - python
   when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Use dotfiles .condarc
@@ -40,4 +42,6 @@
     rm {{ home_dir }}/.condarc
     cd {{ home_dir }}/dotfiles
     stow .
+  tags:
+    - python
   when: not anaconda_status.stat.exists and dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
