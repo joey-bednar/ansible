@@ -4,6 +4,7 @@
     name:
       - fzf
       - stow
+      - fontconfig
     state: present
   tags:
     - dotfiles

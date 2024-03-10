@@ -12,14 +12,19 @@
     - zsh
   when: ansible_facts["distribution"] == "Ubuntu"
 
-- name: Set zsh to default shell
-  user:
-    name: "{{ username }}"
-    shell: "/usr/bin/zsh"
+#- name: Set zsh to default shell
+  #user:
+    #name: "{{ username }}"
+    #shell: "/usr/bin/zsh"
+  #become: true
+  #tags:
+    #- zsh
+  #when: ansible_facts["distribution"] == "Ubuntu"
+- name: Change shell
   become: true
+  shell: chsh -s `which zsh`
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install zsh-autosuggestions
   git:

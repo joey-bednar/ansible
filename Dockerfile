@@ -14,5 +14,5 @@ WORKDIR /home/joey
 
 FROM base
 COPY . /home
-RUN ansible-playbook ../main.yml
+RUN ansible-playbook ../main.yml --tags "core,dotfiles,zsh,tmux,nvim"
 ENTRYPOINT ["/bin/zsh"]
