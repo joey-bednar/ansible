@@ -6,6 +6,7 @@
       - npm
       - curl
       - cargo
+      - python3.10-venv
     state: present
   when: ansible_facts["distribution"] == "Ubuntu"
 

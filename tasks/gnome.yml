@@ -11,3 +11,13 @@
   tags:
     - gnome
   when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Set gnome terminal theme
+  shell: |
+    defaultprofile=$(gsettings get org.gnome.Terminal.ProfilesList default)
+    profileID=$(echo "$defaultprofile" | cut -d "'" -f 2)
+    dconf write /org/gnome/terminal/legacy/profiles:/:$profileID/use-theme-colors 'false'
+    dconf write /org/gnome/terminal/legacy/profiles:/:$profileID/background-color '#282828'
+  tags:
+    - gnome
+  when: ansible_facts["distribution"] == "Ubuntu"
