@@ -26,6 +26,7 @@
     ln -s {{ home_dir }}/anaconda3/bin/conda /usr/bin/conda
     mv {{ home_dir }}/anaconda3/bin/clear {{ home_dir }}/anaconda3/bin/clear_old
     conda config --set auto_activate_base false
+    conda deactivate
   tags:
     - python
   when: not anaconda_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
