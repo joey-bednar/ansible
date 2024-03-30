@@ -19,6 +19,7 @@
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-theme-colors 'false'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ background-color '#282828'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ foreground-color '#dcdfe4'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ font 'DejaVuSansM Nerd Font Mono 12'
   tags:
     - gnome
   when: ansible_facts["distribution"] == "Ubuntu"
