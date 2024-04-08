@@ -23,7 +23,7 @@
 
 - name: Load kitty.conf
   shell: |
-    bash {{home_dir}}/dotfiles/setup
+    bash {{home_dir}}/dotfiles/.local/bin/setup
   tags:
     - dotfiles
   when: ansible_facts["distribution"] == "Ubuntu"
