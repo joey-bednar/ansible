@@ -5,22 +5,23 @@
   vars:
     home_dir: "{{ lookup('env', 'HOME') }}"
     username: "{{ lookup('env', 'USER') }}"
-  pre_tasks:
-    - name: Update cache
-      become: true
-      apt:
-        force_apt_get: true
-        update-cache: true
-        state: present
-      tags:
-        - zsh
-        - nvim
-        - dotfiles
-        - gnome
-        - docker
-        - kitty
-        - i3
-        - python
+# TODO: add back after testing
+      #  pre_tasks:
+      #    - name: Update cache
+      #      become: true
+      #      apt:
+      #        force_apt_get: true
+      #        update-cache: true
+      #        state: present
+      #      tags:
+      #        - zsh
+      #        - nvim
+      #        - dotfiles
+      #        - gnome
+      #        - docker
+      #        - kitty
+      #        - i3
+      #        - python
   tasks:
     - name: Install
       block:
