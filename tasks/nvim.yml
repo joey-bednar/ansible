@@ -13,12 +13,28 @@
     - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
 
+- name: Check if nvim.appimage exists
+  stat:
+    path: "{{ home_dir }}/nvim.appimage"
+  register: nvim_appimage_status
+  tags:
+    - nvim
+  when: ansible_facts["distribution"] == "Ubuntu"
+
 - name: Install Nvim
   shell: |
     curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o {{ home_dir }}/nvim.appimage
     chmod u+x ~/nvim.appimage
     cd {{ home_dir }}
     ~/nvim.appimage --appimage-extract
+  tags:
+    - nvim
+  when: not nvim_appimage_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if nvim in bin
+  stat:
+    path: "/usr/bin/nvim"
+  register: nvim_status
   tags:
     - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
@@ -31,11 +47,19 @@
     ln -s /squashfs-root/AppRun /usr/bin/nvim
   tags:
     - nvim
+  when: not nvim_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if nvim dotfiles exist
+  stat:
+    path: "{{ home_dir }}/dotfiles"
+  register: dotfiles_status
+  tags:
+    - nvim
   when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Neovim Plugins
   shell: nvim --headless "+Lazy! sync" +qa
   tags:
     - nvim
-  when: ansible_facts["distribution"] == "Ubuntu"
+  when: dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
 

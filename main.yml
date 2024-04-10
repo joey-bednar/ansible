@@ -29,7 +29,7 @@
         - include: tasks/dotfiles.yml
         - include: tasks/zsh.yml
         - include: tasks/tmux.yml
-        # - include: tasks/nvim.yml
+        - include: tasks/nvim.yml
         # - include: tasks/gnome.yml
         # - include: tasks/docker.yml
         # - include: tasks/python.yml
