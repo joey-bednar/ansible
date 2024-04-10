@@ -6,33 +6,27 @@
     home_dir: "{{ lookup('env', 'HOME') }}"
     username: "{{ lookup('env', 'USER') }}"
 # TODO: add back after testing
-      #  pre_tasks:
-      #    - name: Update cache
-      #      become: true
-      #      apt:
-      #        force_apt_get: true
-      #        update-cache: true
-      #        state: present
-      #      tags:
-      #        - zsh
-      #        - nvim
-      #        - dotfiles
-      #        - gnome
-      #        - docker
-      #        - kitty
-      #        - i3
-      #        - python
+  pre_tasks:
+    - name: Update cache
+      become: true
+      apt:
+        force_apt_get: true
+        update-cache: true
+        state: present
+      tags:
+        - always
   tasks:
     - name: Install
       block:
+# TODO: add back after testing
         - include: tasks/core.yml
         - include: tasks/dotfiles.yml
         - include: tasks/zsh.yml
         - include: tasks/tmux.yml
         - include: tasks/nvim.yml
         - include: tasks/docker.yml
-        # - include: tasks/python.yml
-        # - include: tasks/gnome.yml
+        - include: tasks/python.yml
+        - include: tasks/gnome.yml
         # - include: tasks/i3.yml
         # - include: tasks/kitty.yml
 

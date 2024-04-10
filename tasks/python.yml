@@ -39,9 +39,8 @@
 
 - name: Use dotfiles .condarc
   shell: |
-    rm {{ home_dir }}/.condarc
-    cd {{ home_dir }}/dotfiles
-    stow .
+    cd {{ home_dir}}/dotfiles
+    make update
   tags:
     - python
   when: not anaconda_status.stat.exists and dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
