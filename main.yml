@@ -22,16 +22,18 @@
         - i3
         - python
   tasks:
-    - include: tasks/core.yml
-    - include: tasks/dotfiles.yml
-    - include: tasks/zsh.yml
-    - include: tasks/tmux.yml
-    - include: tasks/nvim.yml
-    - include: tasks/gnome.yml
-    - include: tasks/docker.yml
-    - include: tasks/python.yml
-    # - include: tasks/i3.yml
-    # - include: tasks/kitty.yml
+    - name: Install
+      block:
+        - include: tasks/core.yml
+        # - include: tasks/dotfiles.yml
+        # - include: tasks/zsh.yml
+        # - include: tasks/tmux.yml
+        # - include: tasks/nvim.yml
+        # - include: tasks/gnome.yml
+        # - include: tasks/docker.yml
+        # - include: tasks/python.yml
+        # - include: tasks/i3.yml
+        # - include: tasks/kitty.yml
 
 # TODO: add macOS support
 # TODO: add command line options with charm cli tools
