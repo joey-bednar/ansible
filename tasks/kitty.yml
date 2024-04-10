@@ -7,3 +7,18 @@
   tags:
     - kitty
   when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Add kitty as favorite
+  shell: |
+    favApps=$(gsettings get org.gnome.shell favorite-apps | sed 's/org.gnome.Terminal/kitty/')
+    gsettings set org.gnome.shell favorite-apps "${favApps}"
+  tags:
+    - kitty
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Set kitty as default terminal
+  shell: |
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
+  tags:
+    - kitty
+  when: ansible_facts["distribution"] == "Ubuntu"

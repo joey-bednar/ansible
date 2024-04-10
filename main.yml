@@ -5,7 +5,7 @@
   vars:
     home_dir: "{{ lookup('env', 'HOME') }}"
     username: "{{ lookup('env', 'USER') }}"
-# TODO: add back after testing
+
   pre_tasks:
     - name: Update cache
       become: true
@@ -18,7 +18,6 @@
   tasks:
     - name: Install
       block:
-# TODO: add back after testing
         - include: tasks/core.yml
         - include: tasks/dotfiles.yml
         - include: tasks/zsh.yml
@@ -27,15 +26,13 @@
         - include: tasks/docker.yml
         - include: tasks/python.yml
         - include: tasks/gnome.yml
+        - include: tasks/kitty.yml
         # - include: tasks/i3.yml
-        # - include: tasks/kitty.yml
 
 # TODO: add macOS support
 # TODO: add command line options with charm cli tools
 # TODO: add option to install kitty or use Gnome terminal
 # TODO: add option to install i3
-
-
 
 # TODO: add spotify
 # TODO: add gimp
