@@ -9,12 +9,28 @@
     - docker
   when: ansible_facts["distribution"] == "Ubuntu"
 
+- name: Check if docker GPG key exists
+  stat:
+    path: "/etc/apt/keyrings/docker.asc"
+  register: gpg_status
+  tags:
+    - docker
+  when: ansible_facts["distribution"] == "Ubuntu"
+
 - name: Add Docker official GPG key
   become: true
   shell: |
     install -m 0755 -d /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     chmod a+r /etc/apt/keyrings/docker.asc
+  tags:
+    - docker
+  when: not gpg_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if Docker repo in apt sources
+  stat:
+    path: "/etc/apt/sources.list.d/docker.list"
+  register: apt_sources_status
   tags:
     - docker
   when: ansible_facts["distribution"] == "Ubuntu"
@@ -29,7 +45,7 @@
       tee /etc/apt/sources.list.d/docker.list > /dev/null
   tags:
     - docker
-  when: ansible_facts["distribution"] == "Ubuntu"
+  when: not apt_sources_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
 
 
 - name: Update cache

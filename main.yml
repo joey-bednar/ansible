@@ -30,9 +30,9 @@
         - include: tasks/zsh.yml
         - include: tasks/tmux.yml
         - include: tasks/nvim.yml
-        # - include: tasks/gnome.yml
-        # - include: tasks/docker.yml
+        - include: tasks/docker.yml
         # - include: tasks/python.yml
+        # - include: tasks/gnome.yml
         # - include: tasks/i3.yml
         # - include: tasks/kitty.yml
 
