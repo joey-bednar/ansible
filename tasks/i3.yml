@@ -1,9 +1,10 @@
-- name: Install Packages
+- name: Install i3
   become: true
   apt:
     name:
-      - unzip
-      - curl
-      - ca-certificates
+      - i3
+      - picom
     state: present
+  tags:
+    - i3
   when: ansible_facts["distribution"] == "Ubuntu"

@@ -1,9 +1,9 @@
-- name: Install Packages
+- name: Install kitty
   become: true
   apt:
     name:
-      - unzip
-      - curl
-      - ca-certificates
+      - kitty
     state: present
+  tags:
+    - kitty
   when: ansible_facts["distribution"] == "Ubuntu"
