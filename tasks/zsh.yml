@@ -1,8 +1,20 @@
-- name: Install zsh
+- name: Install Zsh
   become: true
-  apt: name=zsh
+  apt:
+    name:
+      - zsh
+    state: present
   tags:
     - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Check if oh-my-zsh installed
+  stat:
+    path: "{{ home_dir }}/.oh-my-zsh"
+  register: ohmyzsh_status
+  tags:
+    - zsh
+  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install ohmyzsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -10,7 +22,7 @@
     creates: "{{ home_dir }}/.oh-my-zsh"
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
+  when: not ohmyzsh_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
 
 - name: Set zsh as default shell
   become: true
@@ -48,9 +60,8 @@
 
 - name: Use dotfiles .zshrc
   shell: |
-    rm {{ home_dir }}/.zshrc
-    cd {{ home_dir }}/dotfiles
-    stow .
+    cd {{ home_dir}}/dotfiles
+    make update
   tags:
     - zsh
   when: dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"

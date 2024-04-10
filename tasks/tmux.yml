@@ -1,6 +1,7 @@
 - name: Install tmux
   become: true
   apt: name=tmux
+    state: present
   tags:
     - tmux
   when: ansible_facts["distribution"] == "Ubuntu"
