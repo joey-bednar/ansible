@@ -1,0 +1,9 @@
+- name: Install Gimp
+  become: true
+  apt:
+    name:
+      - gimp
+    state: present
+  tags:
+    - gimp
+  when: ansible_facts["distribution"] == "Ubuntu"
