@@ -1,4 +1,32 @@
 #!/usr/bin/env bash
 
-sudo apt install ansible -y
-ansible-playbook main.yml -i localhost, -K
+if [[ -z $(command -v ansible-playbook) ]]; then
+    sudo apt install ansible -y
+fi
+
+if [[ -z $1 ]]; then
+    echo "usage: install OPTION"
+    echo ""
+    echo "options:"
+    echo ""
+    echo "  personal"
+    echo "  work"
+    echo "  vm"
+    echo "  container"
+    echo "  test [tag]"
+elif [[ $1 == "work" ]]; then
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,docker,python,gnome,kitty"
+elif [[ $1 == "vm" ]]; then
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,docker,python,gnome"
+elif [[ $1 == "container" ]]; then
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim"
+elif [[ $1 == "personal" ]]; then
+    ansible-playbook main.yml -i localhost, -K
+elif [[ $1 == "test" ]]; then
+    ansible-playbook main.yml -i localhost, -K --tags "$2"
+else
+    echo "Invalid option."
+    echo ""
+    ./$0
+fi
+
