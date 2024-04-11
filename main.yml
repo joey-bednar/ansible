@@ -33,5 +33,3 @@
         - include: tasks/i3.yml
 
 # TODO: add macOS support
-# TODO: add command line options with charm cli tools
-# TODO: add option to install i3
