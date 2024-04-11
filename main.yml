@@ -15,6 +15,7 @@
         state: present
       tags:
         - always
+
   tasks:
     - name: Install
       block:
@@ -27,12 +28,11 @@
         - include: tasks/python.yml
         - include: tasks/gnome.yml
         - include: tasks/kitty.yml
-        # - include: tasks/i3.yml
+        - include: tasks/spotify.yml
+        - include: tasks/i3.yml
 
 # TODO: add macOS support
 # TODO: add command line options with charm cli tools
-# TODO: add option to install kitty or use Gnome terminal
 # TODO: add option to install i3
 
-# TODO: add spotify
 # TODO: add gimp

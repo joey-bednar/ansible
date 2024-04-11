@@ -1,0 +1,17 @@
+- name: Install spotify
+  become: true
+  snap:
+    name:
+      - spotify
+    state: present
+  tags:
+    - spotify
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: Add spotify to favorites
+  shell: |
+    favApps=$(gsettings get org.gnome.shell favorite-apps | sed "s/']/', 'spotify_spotify.desktop']/")
+    test "$(gsettings get org.gnome.shell favorite-apps | grep spotify)" || gsettings set org.gnome.shell favorite-apps "${favApps}"
+  tags:
+    - spotify
+  when: ansible_facts["distribution"] == "Ubuntu"
