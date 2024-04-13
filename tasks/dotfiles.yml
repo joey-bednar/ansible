@@ -32,7 +32,8 @@
 # TODO: place setup script in make update
 - name: Load kitty.conf
   shell: |
-    bash {{home_dir}}/dotfiles/.local/bin/setup
+    cd {{home_dir}}/dotfiles
+    make setup
   tags:
     - dotfiles
   when: ansible_facts["distribution"] == "Ubuntu"
