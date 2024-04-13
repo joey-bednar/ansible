@@ -13,6 +13,6 @@ USER joey
 WORKDIR /home/joey
 
 FROM base
-COPY . /home
-RUN ansible-playbook ../main.yml --tags "dotfiles,nvim,zsh"
+COPY . /home/joey
+RUN ./install dev
 ENTRYPOINT ["/bin/zsh"]

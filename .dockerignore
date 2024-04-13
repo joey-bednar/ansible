@@ -1,7 +1,4 @@
-Dockerfile
-.git/
-.gitignore
-test
-install
-*.md
-*.jpg
+*
+!/install
+!/main.yml
+!/tasks

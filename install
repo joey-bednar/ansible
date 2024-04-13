@@ -5,20 +5,26 @@ if [[ -z $(command -v ansible-playbook) ]]; then
 fi
 
 if [[ -z $1 ]]; then
-    echo "usage: install OPTION"
+    echo "usage: install [option]"
     echo ""
     echo "options:"
     echo ""
-    echo "  personal"
-    echo "  work"
-    echo "  vm"
-    echo "  container"
-    echo "  test [tag]"
+    echo "  personal        install everything"
+    echo "  work            install all work tasks"
+    echo "  vm              install all work tasks minus kitty"
+    echo "  dev             install zsh,nvim"
+    echo "  container       build a docker dev container"
+    echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
     ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,docker,python,gnome,kitty"
 elif [[ $1 == "vm" ]]; then
     ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,docker,python,gnome"
 elif [[ $1 == "container" ]]; then
+    docker build -t "ansible" .
+    echo ""
+    echo "Dev container built. Run using:"
+    echo "docker run --rm -it ansible"
+elif [[ $1 == "dev" ]]; then
     ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim"
 elif [[ $1 == "personal" ]]; then
     ansible-playbook main.yml -i localhost, -K
