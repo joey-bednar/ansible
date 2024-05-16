@@ -3,11 +3,8 @@
   apt:
     name:
       - i3
-      - i3wm
-      - i3status
-      - i3lock
-      - i3blocks
       - picom
+      - feh
     state: present
   tags:
     - i3

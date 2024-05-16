@@ -5,6 +5,7 @@
       - fzf
       - stow
       - fontconfig
+      - make
     state: present
   tags:
     - dotfiles

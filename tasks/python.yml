@@ -20,6 +20,7 @@
 - name: Install anaconda
   become: true
   shell: |
+    cd {{ home_dir }}
     curl -o anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
     chmod +x anaconda.sh
     ./anaconda.sh -b -p {{ home_dir }}/anaconda3
