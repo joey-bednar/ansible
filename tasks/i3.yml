@@ -5,7 +5,11 @@
       - i3
       - picom
       - feh
+      - acpi
+      - brightnessctl
     state: present
   tags:
     - i3
   when: ansible_facts["distribution"] == "Ubuntu"
+
+# TODO: add sudo chmod +s $(which brightnessctl)
