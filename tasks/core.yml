@@ -5,6 +5,7 @@
       - unzip
       - curl
       - ca-certificates
+      - make
     state: present
   tags:
     - always
