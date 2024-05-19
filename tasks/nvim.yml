@@ -11,7 +11,6 @@
     state: present
   tags:
     - nvim
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Check if nvim.appimage exists
   stat:
@@ -19,7 +18,6 @@
   register: nvim_appimage_status
   tags:
     - nvim
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Nvim
   shell: |
@@ -29,7 +27,7 @@
     ~/nvim.appimage --appimage-extract
   tags:
     - nvim
-  when: not nvim_appimage_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not nvim_appimage_status.stat.exists
 
 - name: Check if nvim in bin
   stat:
@@ -37,7 +35,6 @@
   register: nvim_status
   tags:
     - nvim
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Expose Nvim globally
   become: true
@@ -47,7 +44,7 @@
     ln -s /squashfs-root/AppRun /usr/bin/nvim
   tags:
     - nvim
-  when: not nvim_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not nvim_status.stat.exists
 
 - name: Check if nvim dotfiles exist
   stat:
@@ -55,11 +52,10 @@
   register: dotfiles_status
   tags:
     - nvim
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Neovim Plugins
   shell: nvim --headless "+Lazy! sync" +qa
   tags:
     - nvim
-  when: dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: dotfiles_status.stat.exists
 

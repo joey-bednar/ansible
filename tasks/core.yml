@@ -9,4 +9,3 @@
     state: present
   tags:
     - always
-  when: ansible_facts["distribution"] == "Ubuntu"

@@ -6,7 +6,6 @@
     state: present
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Check if oh-my-zsh installed
   stat:
@@ -14,7 +13,6 @@
   register: ohmyzsh_status
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install ohmyzsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -22,7 +20,7 @@
     creates: "{{ home_dir }}/.oh-my-zsh"
   tags:
     - zsh
-  when: not ohmyzsh_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not ohmyzsh_status.stat.exists
 
 - name: Set zsh as default shell
   become: true
@@ -38,7 +36,6 @@
     update: yes
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install zsh-syntax-highlighting
   git:
@@ -48,7 +45,6 @@
     update: yes
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Check if dotfiles exists
   stat:
@@ -56,7 +52,6 @@
   register: dotfiles_status
   tags:
     - zsh
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Use dotfiles .zshrc
   shell: |
@@ -64,4 +59,4 @@
     make update
   tags:
     - zsh
-  when: dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: dotfiles_status.stat.exists

@@ -6,7 +6,6 @@
     state: present
   tags:
     - spotify
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Add spotify to favorites
   shell: |
@@ -14,4 +13,3 @@
     test "$(gsettings get org.gnome.shell favorite-apps | grep spotify)" || gsettings set org.gnome.shell favorite-apps "${favApps}"
   tags:
     - spotify
-  when: ansible_facts["distribution"] == "Ubuntu"

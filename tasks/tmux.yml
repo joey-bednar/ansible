@@ -6,7 +6,6 @@
     state: present
   tags:
     - tmux
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install Tmux Plugin Manager
   git:
@@ -16,4 +15,3 @@
     update: yes
   tags:
     - tmux
-  when: ansible_facts["distribution"] == "Ubuntu"

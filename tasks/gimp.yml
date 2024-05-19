@@ -6,4 +6,3 @@
     state: present
   tags:
     - gimp
-  when: ansible_facts["distribution"] == "Ubuntu"

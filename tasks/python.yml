@@ -7,7 +7,6 @@
     state: present
   tags:
     - python
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Check if anaconda is installed
   stat:
@@ -15,7 +14,6 @@
   register: anaconda_status
   tags:
     - python
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Install anaconda
   become: true
@@ -28,7 +26,7 @@
     mv {{ home_dir }}/anaconda3/bin/clear {{ home_dir }}/anaconda3/bin/clear_old
   tags:
     - python
-  when: not anaconda_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not anaconda_status.stat.exists
 
 - name: Check if dotfiles exists
   stat:
@@ -36,7 +34,6 @@
   register: dotfiles_status
   tags:
     - python
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Use dotfiles .condarc
   shell: |
@@ -44,4 +41,4 @@
     make update
   tags:
     - python
-  when: not anaconda_status.stat.exists and dotfiles_status.stat.exists and ansible_facts["distribution"] == "Ubuntu"
+  when: not anaconda_status.stat.exists and dotfiles_status.stat.exists

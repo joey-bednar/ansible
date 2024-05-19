@@ -32,5 +32,6 @@
         - include: tasks/spotify.yml
         - include: tasks/gimp.yml
         - include: tasks/i3.yml
+      when: ansible_facts["distribution"] == "Ubuntu"
 
 # TODO: add macOS support

@@ -9,7 +9,6 @@
     state: present
   tags:
     - dotfiles
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Download dotfiles
   git:
@@ -20,7 +19,6 @@
     force: yes
   tags:
     - dotfiles
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Make update dotfiles
   shell: |
@@ -28,7 +26,6 @@
     make update
   tags:
     - dotfiles
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Load kitty.conf
   shell: |
@@ -36,14 +33,12 @@
     make setup
   tags:
     - dotfiles
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Reload fonts
   shell: |
     fc-cache -f -v
   tags:
     - dotfiles
-  when: ansible_facts["distribution"] == "Ubuntu"
      
 - name: Create personal directory
   ansible.builtin.file:

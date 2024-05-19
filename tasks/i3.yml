@@ -10,7 +10,6 @@
     state: present
   tags:
     - i3
-  when: ansible_facts["distribution"] == "Ubuntu"
 
 - name: Modify brightnessctl permissions
   become: true
@@ -18,5 +17,4 @@
     chmod +s $(which brightnessctl)
   tags:
     - i3
-  when: ansible_facts["distribution"] == "Ubuntu"
 
