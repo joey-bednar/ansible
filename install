@@ -16,16 +16,16 @@ if [[ -z $1 ]]; then
     echo "  container       build a docker dev container"
     echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,node,tmux,nvim,docker,python,gnome,kitty"
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty"
 elif [[ $1 == "vm" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,node,tmux,nvim,docker,python,gnome,i3"
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,i3"
 elif [[ $1 == "container" ]]; then
     docker build -t "ansible" .
     echo ""
     echo "Dev container built. Run using:"
     echo "docker run --rm -it ansible"
 elif [[ $1 == "dev" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,node,nvim"
+    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim,node"
 elif [[ $1 == "personal" ]]; then
     ansible-playbook main.yml -i localhost, -K
 elif [[ $1 == "test" ]]; then
