@@ -1,81 +1,70 @@
-- name: Install Dependencies
-  become: true
-  apt:
-    name:
-      - curl
-      - ca-certificates
-    state: present
+- block:
+  - name: Install Dependencies
+    become: true
+    apt:
+      name:
+        - curl
+        - ca-certificates
+      state: present
+
+  - name: Check if docker GPG key exists
+    stat:
+      path: "/etc/apt/keyrings/docker.asc"
+    register: gpg_status
+
+  - name: Add Docker official GPG key
+    become: true
+    shell: |
+      install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+      chmod a+r /etc/apt/keyrings/docker.asc
+    when: not gpg_status.stat.exists
+
+  - name: Check if Docker repo in apt sources
+    stat:
+      path: "/etc/apt/sources.list.d/docker.list"
+    register: apt_sources_status
+
+
+  - name: Add Docker repository to apt sources
+    become: true
+    shell: |
+      echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+        tee /etc/apt/sources.list.d/docker.list > /dev/null
+    when: not apt_sources_status.stat.exists
+
+
+  - name: Update cache
+    become: true
+    apt:
+      force_apt_get: true
+      update-cache: true
+      state: present
+
+  - name: Install Docker Engine
+    become: true
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+      state: present
+
+  - name: Create docker group
+    become: true
+    group: 
+      name: docker 
+      state: present
+
+  - name: Add user to docker group
+    become: true
+    user: 
+      name: "{{ username }}" 
+      groups: docker 
+      append: yes
   tags:
     - docker
-
-- name: Check if docker GPG key exists
-  stat:
-    path: "/etc/apt/keyrings/docker.asc"
-  register: gpg_status
-  tags:
-    - docker
-
-- name: Add Docker official GPG key
-  become: true
-  shell: |
-    install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    chmod a+r /etc/apt/keyrings/docker.asc
-  tags:
-    - docker
-  when: not gpg_status.stat.exists
-
-- name: Check if Docker repo in apt sources
-  stat:
-    path: "/etc/apt/sources.list.d/docker.list"
-  register: apt_sources_status
-  tags:
-    - docker
-
-
-- name: Add Docker repository to apt sources
-  become: true
-  shell: |
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-      tee /etc/apt/sources.list.d/docker.list > /dev/null
-  tags:
-    - docker
-  when: not apt_sources_status.stat.exists
-
-
-- name: Update cache
-  become: true
-  apt:
-    force_apt_get: true
-    update-cache: true
-    state: present
-  tags:
-    - docker
-
-- name: Install Docker Engine
-  become: true
-  apt:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-    state: present
-  tags:
-    - docker
-
-- name: Create docker group
-  become: true
-  group: 
-    name: docker 
-    state: present
-
-- name: Add user to docker group
-  become: true
-  user: 
-    name: "{{ username }}" 
-    groups: docker 
-    append: yes

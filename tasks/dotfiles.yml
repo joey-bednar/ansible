@@ -1,57 +1,47 @@
-- name: Install dotfiles dependencies
-  become: true
-  apt:
-    name:
-      - fzf
-      - stow
-      - fontconfig
-      - make
-    state: present
-  tags:
-    - dotfiles
+- block:
+    - name: Install dotfiles dependencies
+      become: true
+      apt:
+        name:
+          - fzf
+          - stow
+          - fontconfig
+          - make
+        state: present
 
-- name: Download dotfiles
-  git:
-    repo: https://github.com/joey-bednar/dotfiles
-    dest: "{{ home_dir }}/dotfiles"
-    clone: yes
-    update: yes
-    force: yes
-  tags:
-    - dotfiles
+    - name: Download dotfiles
+      git:
+        repo: https://github.com/joey-bednar/dotfiles
+        dest: "{{ home_dir }}/dotfiles"
+        clone: yes
+        update: yes
+        force: yes
 
-- name: Make update dotfiles
-  shell: |
-    cd {{home_dir}}/dotfiles
-    make update
-  tags:
-    - dotfiles
+    - name: Make update dotfiles
+      shell: |
+        cd {{home_dir}}/dotfiles
+        make update
 
-- name: Load kitty.conf
-  shell: |
-    cd {{home_dir}}/dotfiles
-    make setup
-  tags:
-    - dotfiles
+    - name: Load kitty.conf
+      shell: |
+        cd {{home_dir}}/dotfiles
+        make setup
 
-- name: Reload fonts
-  shell: |
-    fc-cache -f -v
-  tags:
-    - dotfiles
-     
-- name: Create personal directory
-  ansible.builtin.file:
-    path: "{{ home_dir }}/personal"
-    state: directory
-    mode: '0755'
-  tags:
-    - dotfiles
+    - name: Reload fonts
+      shell: |
+        fc-cache -f -v
 
-- name: Create work directory
-  ansible.builtin.file:
-    path: "{{ home_dir }}/work"
-    state: directory
-    mode: '0755'
+    - name: Create personal directory
+      ansible.builtin.file:
+        path: "{{ home_dir }}/personal"
+        state: directory
+        mode: "0755"
+
+    - name: Create work directory
+      ansible.builtin.file:
+        path: "{{ home_dir }}/work"
+        state: directory
+        mode: "0755"
+
   tags:
     - dotfiles

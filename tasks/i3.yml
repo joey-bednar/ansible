@@ -1,20 +1,19 @@
-- name: Install i3
-  become: true
-  apt:
-    name:
-      - i3
-      - picom
-      - feh
-      - acpi
-      - brightnessctl
-    state: present
-  tags:
-    - i3
+- block:
+  - name: Install i3
+    become: true
+    apt:
+      name:
+        - i3
+        - picom
+        - feh
+        - acpi
+        - brightnessctl
+      state: present
 
-- name: Modify brightnessctl permissions
-  become: true
-  shell: |
-    chmod +s $(which brightnessctl)
+  - name: Modify brightnessctl permissions
+    become: true
+    shell: |
+      chmod +s $(which brightnessctl)
   tags:
     - i3
 
