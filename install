@@ -1,37 +1,44 @@
 #!/usr/bin/env bash
 
-if [[ -z $(command -v ansible-playbook) ]]; then
-    sudo apt install ansible -y
-fi
+install_ansible() {
+	if [[ -z $(command -v ansible-playbook) ]]; then
+		sudo apt install ansible -y
+	fi
+}
 
 if [[ -z $1 ]]; then
-    echo "usage: install [option]"
-    echo ""
-    echo "options:"
-    echo ""
-    echo "  personal        install everything"
-    echo "  work            install all work tasks"
-    echo "  vm              install all work tasks (minus kitty, plus i3)"
-    echo "  dev             install zsh,nvim"
-    echo "  container       build a docker dev container"
-    echo "  test [tag]      install tasks with specified tag"
+	echo "usage: install [option]"
+	echo ""
+	echo "options:"
+	echo ""
+	echo "  personal        install everything"
+	echo "  work            install all work tasks"
+	echo "  vm              install all work tasks (minus kitty, plus i3)"
+	echo "  dev             install zsh,nvim"
+	echo "  container       build a docker dev container"
+	echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty"
+	install_ansible
+	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty"
 elif [[ $1 == "vm" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,i3"
+	install_ansible
+	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,i3"
 elif [[ $1 == "container" ]]; then
-    docker build -t "ansible" .
-    echo ""
-    echo "Dev container built. Run using:"
-    echo "docker run --rm -it ansible"
+	docker build -t "ansible" .
+	echo ""
+	echo "Dev container built. Run using:"
+	echo "docker run --rm -it ansible"
 elif [[ $1 == "dev" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim,node"
+	install_ansible
+	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim,node"
 elif [[ $1 == "personal" ]]; then
-    ansible-playbook main.yml -i localhost, -K
+	install_ansible
+	ansible-playbook main.yml -i localhost, -K
 elif [[ $1 == "test" ]]; then
-    ansible-playbook main.yml -i localhost, -K --tags "$2"
+	install_ansible
+	ansible-playbook main.yml -i localhost, -K --tags "$2"
 else
-    echo "Invalid option."
-    echo ""
-    ./$0
+	echo "Invalid option."
+	echo ""
+	./$0
 fi
