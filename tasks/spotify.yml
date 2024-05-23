@@ -1,11 +1,11 @@
 - name: Install spotify
   become: true
-  snap:
+  ansible.builtin.snap:
     name:
       - spotify
     state: present
 
 - name: Add spotify to favorites
-  shell: |
+  ansible.builtin.shell: |
     favApps=$(gsettings get org.gnome.shell favorite-apps | sed "s/']/', 'spotify_spotify.desktop']/")
     test "$(gsettings get org.gnome.shell favorite-apps | grep spotify)" || gsettings set org.gnome.shell favorite-apps "${favApps}"

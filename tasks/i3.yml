@@ -1,6 +1,6 @@
 - name: Install i3
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - i3
       - picom
@@ -11,5 +11,5 @@
 
 - name: Modify brightnessctl permissions
   become: true
-  shell: |
+  ansible.builtin.shell: |
     chmod +s $(which brightnessctl)

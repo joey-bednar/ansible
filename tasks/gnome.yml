@@ -1,13 +1,13 @@
 - name: Set wallpaper
-  shell: |
+  ansible.builtin.shell: |
     gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/ubuntu-background.jpg
 
 - name: Set favorite apps
-  shell: |
+  ansible.builtin.shell: |
     gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','org.gnome.Terminal.desktop']"
 
 - name: Set gnome terminal theme
-  shell: |
+  ansible.builtin.shell: |
     defaultprofile=$(gsettings get org.gnome.Terminal.ProfilesList default)
     profileID=$(echo "$defaultprofile" | cut -d "'" -f 2)
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-theme-colors 'false'

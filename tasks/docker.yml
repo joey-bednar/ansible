@@ -1,32 +1,32 @@
 - name: Install Dependencies
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - curl
       - ca-certificates
     state: present
 
 - name: Check if docker GPG key exists
-  stat:
+  ansible.builtin.stat:
     path: "/etc/apt/keyrings/docker.asc"
   register: gpg_status
 
 - name: Add Docker official GPG key
   become: true
-  shell: |
+  ansible.builtin.shell: |
     install -m 0755 -d /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     chmod a+r /etc/apt/keyrings/docker.asc
   when: not gpg_status.stat.exists
 
 - name: Check if Docker repo in apt sources
-  stat:
+  ansible.builtin.stat:
     path: "/etc/apt/sources.list.d/docker.list"
   register: apt_sources_status
 
 - name: Add Docker repository to apt sources
   become: true
-  shell: |
+  ansible.builtin.shell: |
     echo \
       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
       $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -35,14 +35,14 @@
 
 - name: Update cache
   become: true
-  apt:
+  ansible.builtin.apt:
     force_apt_get: true
     update-cache: true
     state: present
 
 - name: Install Docker Engine
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - docker-ce
       - docker-ce-cli
@@ -53,13 +53,13 @@
 
 - name: Create docker group
   become: true
-  group:
+  ansible.builtin.group:
     name: docker
     state: present
 
 - name: Add user to docker group
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ username }}"
     groups: docker
-    append: yes
+    append: true

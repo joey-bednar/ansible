@@ -1,6 +1,6 @@
 - name: Install dotfiles dependencies
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - fzf
       - stow
@@ -9,25 +9,25 @@
     state: present
 
 - name: Download dotfiles
-  git:
+  ansible.builtin.git:
     repo: https://github.com/joey-bednar/dotfiles
     dest: "{{ home_dir }}/dotfiles"
-    clone: yes
-    update: yes
-    force: yes
+    clone: true
+    update: true
+    force: true
 
 - name: Make update dotfiles
-  shell: |
+  ansible.builtin.shell: |
     cd {{home_dir}}/dotfiles
     make update
 
 - name: Load kitty.conf
-  shell: |
+  ansible.builtin.shell: |
     cd {{home_dir}}/dotfiles
     make setup
 
 - name: Reload fonts
-  shell: |
+  ansible.builtin.shell: |
     fc-cache -f -v
 
 - name: Create personal directory

@@ -1,13 +1,13 @@
 - name: Install tmux
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - tmux
     state: present
 
 - name: Install Tmux Plugin Manager
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/tmux-plugins/tpm"
     dest: "~/.tmux/plugins/tpm"
-    clone: yes
-    update: yes
+    clone: true
+    update: true

@@ -1,15 +1,15 @@
 - name: Install kitty
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - kitty
     state: present
 
 - name: Add kitty as favorite
-  shell: |
+  ansible.builtin.shell: |
     favApps=$(gsettings get org.gnome.shell favorite-apps | sed 's/org.gnome.Terminal/kitty/')
     gsettings set org.gnome.shell favorite-apps "${favApps}"
 
 - name: Set kitty as default terminal
-  shell: |
+  ansible.builtin.shell: |
     gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
