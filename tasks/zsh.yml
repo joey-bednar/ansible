@@ -20,14 +20,14 @@
   become: true
   ansible.builtin.shell: chsh -s $(which zsh) {{ username }}
 
-- name: Install zsh-autosuggestions
+- name: Install zsh-autosuggestions # noqa latest
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
     clone: true
     update: true
 
-- name: Install zsh-syntax-highlighting
+- name: Install zsh-syntax-highlighting # noqa latest
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
     dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
@@ -41,6 +41,6 @@
 
 - name: Use dotfiles .zshrc
   ansible.builtin.shell: |
-    cd {{ home_dir}}/dotfiles
+    cd {{ home_dir }}/dotfiles
     make update
   when: dotfiles_status.stat.exists

@@ -29,6 +29,6 @@
 
 - name: Use dotfiles .condarc
   ansible.builtin.shell: |
-    cd {{ home_dir}}/dotfiles
+    cd {{ home_dir }}/dotfiles
     make update
   when: not anaconda_status.stat.exists and dotfiles_status.stat.exists

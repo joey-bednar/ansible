@@ -8,7 +8,7 @@
       - make
     state: present
 
-- name: Download dotfiles
+- name: Download dotfiles # noqa latest
   ansible.builtin.git:
     repo: https://github.com/joey-bednar/dotfiles
     dest: "{{ home_dir }}/dotfiles"
@@ -18,12 +18,12 @@
 
 - name: Make update dotfiles
   ansible.builtin.shell: |
-    cd {{home_dir}}/dotfiles
+    cd {{ home_dir }}/dotfiles
     make update
 
 - name: Load kitty.conf
   ansible.builtin.shell: |
-    cd {{home_dir}}/dotfiles
+    cd {{ home_dir }}/dotfiles
     make setup
 
 - name: Reload fonts
