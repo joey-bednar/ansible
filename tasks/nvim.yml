@@ -1,50 +1,46 @@
-- block:
-  - name: Install nvim dependencies
-    become: true
-    apt:
-      name:
-        - ripgrep
-        - fzf
-        - npm
-        - curl
-        - cargo
-        - python3.10-venv
-      state: present
+- name: Install nvim dependencies
+  become: true
+  apt:
+    name:
+      - ripgrep
+      - fzf
+      - npm
+      - curl
+      - cargo
+      - python3.10-venv
+    state: present
 
-  - name: Check if nvim.appimage exists
-    stat:
-      path: "{{ home_dir }}/nvim.appimage"
-    register: nvim_appimage_status
+- name: Check if nvim.appimage exists
+  stat:
+    path: "{{ home_dir }}/nvim.appimage"
+  register: nvim_appimage_status
 
-  - name: Install Nvim
-    shell: |
-      curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o {{ home_dir }}/nvim.appimage
-      chmod u+x ~/nvim.appimage
-      cd {{ home_dir }}
-      ~/nvim.appimage --appimage-extract
-    when: not nvim_appimage_status.stat.exists
+- name: Install Nvim # noqa no-changed-when
+  shell: |
+    curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o {{ home_dir }}/nvim.appimage
+    chmod u+x ~/nvim.appimage
+    cd {{ home_dir }}
+    ~/nvim.appimage --appimage-extract
+  when: not nvim_appimage_status.stat.exists
 
-  - name: Check if nvim in bin
-    stat:
-      path: "/usr/bin/nvim"
-    register: nvim_status
+- name: Check if nvim in bin
+  stat:
+    path: "/usr/bin/nvim"
+  register: nvim_status
 
-  - name: Expose Nvim globally
-    become: true
-    shell: |
-      mv {{ home_dir }}/squashfs-root /
-      rm /usr/bin/nvim
-      ln -s /squashfs-root/AppRun /usr/bin/nvim
-    when: not nvim_status.stat.exists
+- name: Expose Nvim globally # noqa no-changed-when
+  become: true
+  shell: |
+    mv {{ home_dir }}/squashfs-root /
+    rm /usr/bin/nvim
+    ln -s /squashfs-root/AppRun /usr/bin/nvim
+  when: not nvim_status.stat.exists
 
-  - name: Check if nvim dotfiles exist
-    stat:
-      path: "{{ home_dir }}/dotfiles"
-    register: dotfiles_status
+- name: Check if nvim dotfiles exist
+  stat:
+    path: "{{ home_dir }}/dotfiles"
+  register: dotfiles_status
 
-  - name: Install Neovim Plugins
-    shell: nvim --headless "+Lazy! sync" +qa
-    when: dotfiles_status.stat.exists
-  tags:
-    - nvim
-
+- name: Install Neovim Plugins
+  shell: nvim --headless "+Lazy! sync" +qa
+  when: dotfiles_status.stat.exists

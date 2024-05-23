@@ -1,20 +1,17 @@
-- block:
-  - name: Set wallpaper
-    shell: |
-      gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/ubuntu-background.jpg
+- name: Set wallpaper
+  shell: |
+    gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/ubuntu-background.jpg
 
-  - name: Set favorite apps
-    shell: |
-      gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','org.gnome.Terminal.desktop']"
+- name: Set favorite apps
+  shell: |
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','org.gnome.Terminal.desktop']"
 
-  - name: Set gnome terminal theme
-    shell: |
-      defaultprofile=$(gsettings get org.gnome.Terminal.ProfilesList default)
-      profileID=$(echo "$defaultprofile" | cut -d "'" -f 2)
-      gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-theme-colors 'false'
-      gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ background-color '#282828'
-      gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ foreground-color '#dcdfe4'
-      gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ font 'DejaVuSansM Nerd Font Mono 12'
-      gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-system-font false
-  tags:
-    - gnome
+- name: Set gnome terminal theme
+  shell: |
+    defaultprofile=$(gsettings get org.gnome.Terminal.ProfilesList default)
+    profileID=$(echo "$defaultprofile" | cut -d "'" -f 2)
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-theme-colors 'false'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ background-color '#282828'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ foreground-color '#dcdfe4'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ font 'DejaVuSansM Nerd Font Mono 12'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-system-font false

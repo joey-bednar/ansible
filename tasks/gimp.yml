@@ -4,5 +4,3 @@
     name:
       - gimp
     state: present
-  tags:
-    - gimp

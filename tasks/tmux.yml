@@ -1,16 +1,13 @@
-- block:
-  - name: Install tmux
-    become: true
-    apt:
-      name:
-        - tmux
-      state: present
+- name: Install tmux
+  become: true
+  apt:
+    name:
+      - tmux
+    state: present
 
-  - name: Install Tmux Plugin Manager
-    git:
-      repo: 'https://github.com/tmux-plugins/tpm'
-      dest: "~/.tmux/plugins/tpm"
-      clone: yes
-      update: yes
-  tags:
-    - tmux
+- name: Install Tmux Plugin Manager
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "~/.tmux/plugins/tpm"
+    clone: yes
+    update: yes

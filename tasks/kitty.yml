@@ -1,18 +1,15 @@
-- block:
-  - name: Install kitty
-    become: true
-    apt:
-      name:
-        - kitty
-      state: present
+- name: Install kitty
+  become: true
+  apt:
+    name:
+      - kitty
+    state: present
 
-  - name: Add kitty as favorite
-    shell: |
-      favApps=$(gsettings get org.gnome.shell favorite-apps | sed 's/org.gnome.Terminal/kitty/')
-      gsettings set org.gnome.shell favorite-apps "${favApps}"
+- name: Add kitty as favorite
+  shell: |
+    favApps=$(gsettings get org.gnome.shell favorite-apps | sed 's/org.gnome.Terminal/kitty/')
+    gsettings set org.gnome.shell favorite-apps "${favApps}"
 
-  - name: Set kitty as default terminal
-    shell: |
-      gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
-  tags:
-    - kitty
+- name: Set kitty as default terminal
+  shell: |
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'

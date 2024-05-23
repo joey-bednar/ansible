@@ -1,49 +1,46 @@
-- block:
-  - name: Install Zsh
-    become: true
-    apt:
-      name:
-        - zsh
-      state: present
+- name: Install Zsh
+  become: true
+  apt:
+    name:
+      - zsh
+    state: present
 
-  - name: Check if oh-my-zsh installed
-    stat:
-      path: "{{ home_dir }}/.oh-my-zsh"
-    register: ohmyzsh_status
+- name: Check if oh-my-zsh installed
+  stat:
+    path: "{{ home_dir }}/.oh-my-zsh"
+  register: ohmyzsh_status
 
-  - name: Install ohmyzsh
-    shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    args:
-      creates: "{{ home_dir }}/.oh-my-zsh"
-    when: not ohmyzsh_status.stat.exists
+- name: Install ohmyzsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  args:
+    creates: "{{ home_dir }}/.oh-my-zsh"
+  when: not ohmyzsh_status.stat.exists
 
-  - name: Set zsh as default shell
-    become: true
-    shell: chsh -s $(which zsh) {{ username }}
+- name: Set zsh as default shell
+  become: true
+  shell: chsh -s $(which zsh) {{ username }}
 
-  - name: Install zsh-autosuggestions
-    git:
-      repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-      dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
-      clone: yes
-      update: yes
+- name: Install zsh-autosuggestions
+  git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
+    clone: yes
+    update: yes
 
-  - name: Install zsh-syntax-highlighting
-    git:
-      repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-      dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
-      clone: yes
-      update: yes
+- name: Install zsh-syntax-highlighting
+  git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "~/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+    clone: yes
+    update: yes
 
-  - name: Check if dotfiles exists
-    stat:
-      path: "{{ home_dir }}/dotfiles"
-    register: dotfiles_status
+- name: Check if dotfiles exists
+  stat:
+    path: "{{ home_dir }}/dotfiles"
+  register: dotfiles_status
 
-  - name: Use dotfiles .zshrc
-    shell: |
-      cd {{ home_dir}}/dotfiles
-      make update
-    when: dotfiles_status.stat.exists
-  tags:
-    - zsh
+- name: Use dotfiles .zshrc
+  shell: |
+    cd {{ home_dir}}/dotfiles
+    make update
+  when: dotfiles_status.stat.exists

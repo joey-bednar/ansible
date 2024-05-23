@@ -9,7 +9,7 @@
   pre_tasks:
     - name: Update cache
       become: true
-      apt:
+      ansible.builtin.apt:
         force_apt_get: true
         update-cache: true
         state: present
@@ -17,21 +17,71 @@
         - always
 
   tasks:
-    - name: Install
-      block:
-        - include: tasks/core.yml
-        - include: tasks/dotfiles.yml
-        - include: tasks/zsh.yml
-        - include: tasks/tmux.yml
-        - include: tasks/nvim.yml
-        - include: tasks/node.yml
-        - include: tasks/docker.yml
-        - include: tasks/python.yml
-        - include: tasks/gnome.yml
-        - include: tasks/kitty.yml
-        - include: tasks/spotify.yml
-        - include: tasks/gimp.yml
-        - include: tasks/i3.yml
+    - name: Setup Ubuntu
       when: ansible_facts["distribution"] == "Ubuntu"
+      block:
+        - name: Core
+          ansible.builtin.import_tasks: tasks/core.yml
+          tags:
+            - always
 
+        - name: Dotfiles
+          ansible.builtin.import_tasks: tasks/dotfiles.yml
+          tags:
+            - dotfiles
+
+        - name: Zsh
+          ansible.builtin.import_tasks: tasks/zsh.yml
+          tags:
+            - zsh
+
+        - name: Tmux
+          ansible.builtin.import_tasks: tasks/tmux.yml
+          tags:
+            - tmux
+
+        - name: Nvim
+          ansible.builtin.import_tasks: tasks/nvim.yml
+          tags:
+            - nvim
+
+        - name: Node
+          ansible.builtin.import_tasks: tasks/node.yml
+          tags:
+            - node
+
+        - name: Docker
+          ansible.builtin.import_tasks: tasks/docker.yml
+          tags:
+            - docker
+
+        - name: Python
+          ansible.builtin.import_tasks: tasks/python.yml
+          tags:
+            - python
+
+        - name: Gnome
+          ansible.builtin.import_tasks: tasks/gnome.yml
+          tags:
+            - gnome
+
+        - name: Kitty
+          ansible.builtin.import_tasks: tasks/kitty.yml
+          tags:
+            - kitty
+
+        - name: Spotify
+          ansible.builtin.import_tasks: tasks/spotify.yml
+          tags:
+            - spotify
+
+        - name: Gimp
+          ansible.builtin.import_tasks: tasks/gimp.yml
+          tags:
+            - gimp
+
+        - name: I3
+          ansible.builtin.import_tasks: tasks/i3.yml
+          tags:
+            - i3
 # TODO: add macOS support
