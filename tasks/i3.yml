@@ -13,3 +13,4 @@
   become: true
   ansible.builtin.shell: |
     chmod +s $(which brightnessctl)
+  changed_when: true

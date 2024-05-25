@@ -19,6 +19,7 @@
 - name: Set zsh as default shell
   become: true
   ansible.builtin.shell: chsh -s $(which zsh) {{ username }}
+  changed_when: true
 
 - name: Install zsh-autosuggestions # noqa latest
   ansible.builtin.git:
@@ -44,3 +45,4 @@
     cd {{ home_dir }}/dotfiles
     make update
   when: dotfiles_status.stat.exists
+  changed_when: dotfiles_status.stat.exists
