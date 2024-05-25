@@ -1,5 +1,6 @@
 - name: "Install nvm" # noqa command-instead-of-module
-  ansible.builtin.command:
+  ansible.builtin.shell: |
+    set -o pipefail
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
   args:
     executable: /bin/bash
