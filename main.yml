@@ -85,3 +85,4 @@
           tags:
             - i3
 # TODO: add macOS support
+# TODO: add task for kubectl/minikube

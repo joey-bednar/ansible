@@ -16,19 +16,23 @@
     update: true
     force: true
 
-- name: Make update dotfiles
+- name: Make dotfiles
   ansible.builtin.shell: |
     cd {{ home_dir }}/dotfiles
     make update
-
-- name: Load kitty.conf
-  ansible.builtin.shell: |
-    cd {{ home_dir }}/dotfiles
     make setup
+  changed_when: always
 
-- name: Reload fonts
-  ansible.builtin.shell: |
-    fc-cache -f -v
+- name: Search for custom font
+  ansible.builtin.shell: fc-list | grep -q "DejaVuSansM"
+  register: font_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Load custom font
+  ansible.builtin.command: fc-cache -f -v
+  when: font_check is failed
+  changed_when: font_check is failed
 
 - name: Create personal directory
   ansible.builtin.file:
