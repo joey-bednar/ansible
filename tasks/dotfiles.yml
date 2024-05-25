@@ -21,7 +21,7 @@
     cd {{ home_dir }}/dotfiles
     make update
     make setup
-  changed_when: always
+  changed_when: true
 
 - name: Search for custom font
   ansible.builtin.shell: fc-list | grep -q "DejaVuSansM"
