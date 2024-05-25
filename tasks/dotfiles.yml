@@ -31,8 +31,8 @@
 
 - name: Load custom font
   ansible.builtin.command: fc-cache -f -v
-  when: font_check is failed
-  changed_when: font_check is failed
+  when: font_check.rc != 0
+  changed_when: font_check.rc != 0
 
 - name: Create personal directory
   ansible.builtin.file:

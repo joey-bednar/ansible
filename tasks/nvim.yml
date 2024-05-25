@@ -15,10 +15,15 @@
     path: "{{ home_dir }}/nvim.appimage"
   register: nvim_appimage_status
 
-- name: Install Nvim # noqa no-changed-when
+- name: Download Nvim
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    dest: "{{ home_dir }}/nvim.appimage"
+    mode: "u+x"
+  when: not nvim_appimage_status.stat.exists
+
+- name: Install Nvim
   ansible.builtin.shell: |
-    curl -L https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o {{ home_dir }}/nvim.appimage
-    chmod u+x ~/nvim.appimage
     cd {{ home_dir }}
     ~/nvim.appimage --appimage-extract
   when: not nvim_appimage_status.stat.exists
@@ -28,7 +33,7 @@
     path: "/usr/bin/nvim"
   register: nvim_status
 
-- name: Expose Nvim globally # noqa no-changed-when
+- name: Expose Nvim globally
   become: true
   ansible.builtin.shell: |
     mv {{ home_dir }}/squashfs-root /
