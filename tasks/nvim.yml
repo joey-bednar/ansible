@@ -20,26 +20,22 @@
     url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
     dest: "{{ home_dir }}/nvim.appimage"
     mode: "u+x"
-  when: not nvim_appimage_status.stat.exists
-
-- name: Install Nvim
-  ansible.builtin.shell: |
-    cd {{ home_dir }}
-    ~/nvim.appimage --appimage-extract
-  when: not nvim_appimage_status.stat.exists
 
 - name: Check if nvim in bin
   ansible.builtin.stat:
     path: "/usr/bin/nvim"
   register: nvim_status
 
-- name: Expose Nvim globally
+- name: Install nvim
   become: true
   ansible.builtin.shell: |
+    cd {{ home_dir }}
+    {{ home_dir }}/nvim.appimage --appimage-extract
     mv {{ home_dir }}/squashfs-root /
     rm /usr/bin/nvim
     ln -s /squashfs-root/AppRun /usr/bin/nvim
   when: not nvim_status.stat.exists
+  changed_when: not nvim_status.stat.exists
 
 - name: Check if nvim dotfiles exist
   ansible.builtin.stat:
@@ -47,5 +43,6 @@
   register: dotfiles_status
 
 - name: Install Neovim Plugins
-  ansible.builtin.shell: nvim --headless "+Lazy! sync" +qa
+  ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   when: dotfiles_status.stat.exists
+  changed_when: dotfiles_status.stat.exists

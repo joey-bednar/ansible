@@ -24,7 +24,7 @@
   changed_when: true
 
 - name: Search for custom font
-  ansible.builtin.shell: fc-list | grep -q "DejaVuSansM"
+  ansible.builtin.shell: fc-list | grep -q Nerd
   register: font_check
   ignore_errors: true
   changed_when: false
