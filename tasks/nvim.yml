@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name:
       - ripgrep
-      - fzf
       - npm
       - curl
       - cargo

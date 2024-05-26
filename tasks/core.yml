@@ -7,3 +7,10 @@
       - ca-certificates
       - make
     state: present
+
+- name: Install Utils
+  become: true
+  ansible.builtin.apt:
+    name:
+      - xclip
+    state: present

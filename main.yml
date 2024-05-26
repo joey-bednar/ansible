@@ -35,6 +35,14 @@
           tags:
             - zsh
 
+        - name: Fzf
+          ansible.builtin.import_tasks: tasks/fzf.yml
+          tags:
+            - fzf
+            - dotfiles
+            - zsh
+            - nvim
+
         - name: Tmux
           ansible.builtin.import_tasks: tasks/tmux.yml
           tags:

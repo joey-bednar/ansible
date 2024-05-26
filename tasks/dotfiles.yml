@@ -2,7 +2,6 @@
   become: true
   ansible.builtin.apt:
     name:
-      - fzf
       - stow
       - fontconfig
       - make
