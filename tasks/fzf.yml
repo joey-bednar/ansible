@@ -8,5 +8,6 @@
 
 - name: Install fzf
   ansible.builtin.shell: |
+    cd {{ home_dir }}
     .fzf/install
   changed_when: true
