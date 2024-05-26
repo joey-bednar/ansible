@@ -10,30 +10,28 @@
       - python3.10-venv
     state: present
 
-- name: Check if nvim.appimage exists
-  ansible.builtin.stat:
-    path: "{{ home_dir }}/nvim.appimage"
-  register: nvim_appimage_status
-
-- name: Download Nvim
-  ansible.builtin.get_url:
-    url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
-    dest: "{{ home_dir }}/nvim.appimage"
-    mode: "u+x"
-
 - name: Check if nvim in bin
   ansible.builtin.stat:
     path: "/usr/bin/nvim"
   register: nvim_status
 
+- name: Download Nvim
+  become: true
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    dest: "{{ home_dir }}/nvim.appimage"
+    mode: "u+x"
+  when: not nvim_status.stat.exists
+  changed_when: not nvim_status.stat.exists
+
 - name: Install nvim
   become: true
   ansible.builtin.shell: |
-    cd {{ home_dir }}
     {{ home_dir }}/nvim.appimage --appimage-extract
-    mv {{ home_dir }}/squashfs-root /
+    mv {{ home_dir }}/squashfs-root {{ home_dir }}/.nvim
     rm /usr/bin/nvim
-    ln -s /squashfs-root/AppRun /usr/bin/nvim
+    ln -s {{ home_dir }}/.nvim/AppRun /usr/bin/nvim
+    rm {{ home_dir }}/nvim.appimage
   when: not nvim_status.stat.exists
   changed_when: not nvim_status.stat.exists
 
