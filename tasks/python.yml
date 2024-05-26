@@ -7,8 +7,9 @@
     state: present
 
 - name: Check if anaconda is installed
+  become: true
   ansible.builtin.stat:
-    path: "{{ home_dir }}/anaconda3"
+    path: "opt/anaconda3/bin/conda"
   register: anaconda_status
 
 - name: Install anaconda
@@ -17,9 +18,9 @@
     cd {{ home_dir }}
     curl -o anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
     chmod +x anaconda.sh
-    ./anaconda.sh -b -p {{ home_dir }}/anaconda3
-    ln -s {{ home_dir }}/anaconda3/bin/conda /usr/bin/conda
-    mv {{ home_dir }}/anaconda3/bin/clear {{ home_dir }}/anaconda3/bin/clear_old
+    ./anaconda.sh -b -p /opt/anaconda3
+    ln -s /opt/anaconda3/bin/conda /usr/bin/conda
+    mv /opt/anaconda3/bin/clear /opt/anaconda3/bin/clear_old
     rm {{ home_dir }}/anaconda.sh
   when: not anaconda_status.stat.exists
   changed_when: not anaconda_status.stat.exists
@@ -33,5 +34,6 @@
   ansible.builtin.shell: |
     cd {{ home_dir }}/dotfiles
     make update
+    make setup
   when: not anaconda_status.stat.exists and dotfiles_status.stat.exists
   changed_when: not anaconda_status.stat.exists and dotfiles_status.stat.exists
