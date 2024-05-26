@@ -9,6 +9,5 @@
 - name: Install fzf
   become: true
   ansible.builtin.shell: |
-    cd {{ home_dir }}
-    ./.fzf/install --all --no-bash --no-fish
+    {{ home_dir }}/.fzf/install --all --no-bash --no-fish
   changed_when: true
