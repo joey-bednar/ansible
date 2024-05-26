@@ -23,16 +23,10 @@
     make setup
   changed_when: true
 
-- name: Search for custom font
-  ansible.builtin.shell: fc-list | grep -q Nerd
-  register: font_check
-  ignore_errors: true
-  changed_when: false
-
-- name: Load custom font
+- name: Reload fonts
   ansible.builtin.command: fc-cache -f -v
-  when: font_check.rc != 0
-  changed_when: font_check.rc != 0
+  when: true
+  changed_when: true
 
 - name: Create personal directory
   ansible.builtin.file:

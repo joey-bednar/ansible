@@ -11,12 +11,12 @@
     state: present
 
 - name: Check if nvim in bin
+  become: true
   ansible.builtin.stat:
     path: "/usr/bin/nvim"
   register: nvim_status
 
 - name: Download Nvim
-  become: true
   ansible.builtin.get_url:
     url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
     dest: "{{ home_dir }}/nvim.appimage"
@@ -27,7 +27,8 @@
 - name: Install nvim
   become: true
   ansible.builtin.shell: |
-    {{ home_dir }}/nvim.appimage --appimage-extract
+    cd {{ home_dir }}
+    ./nvim.appimage --appimage-extract
     mv {{ home_dir }}/squashfs-root {{ home_dir }}/.nvim
     rm /usr/bin/nvim
     ln -s {{ home_dir }}/.nvim/AppRun /usr/bin/nvim
