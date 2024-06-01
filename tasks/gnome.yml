@@ -1,6 +1,6 @@
 - name: Set wallpaper
   ansible.builtin.shell: |
-    gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/ubuntu-background.jpg
+    gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/wallpapers/ubuntu-background.jpg
 
 - name: Set favorite apps
   ansible.builtin.shell: |
