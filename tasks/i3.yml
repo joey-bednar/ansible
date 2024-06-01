@@ -3,14 +3,42 @@
   ansible.builtin.apt:
     name:
       - i3
+      - i3blocks
       - picom
       - feh
       - acpi
       - brightnessctl
+      - net-tools
+      - lm-sensors
     state: present
 
 - name: Modify brightnessctl permissions
   become: true
   ansible.builtin.shell: |
     chmod +s $(which brightnessctl)
+  changed_when: true
+
+- name: Install Gruvbox GTK Theme # noqa latest
+  ansible.builtin.git:
+    repo: "https://github.com/TheGreatMcPain/gruvbox-material-gtk"
+    dest: "/tmp/gruvbox-material-gtk"
+    clone: true
+    update: true
+
+- name: Create themes directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.themes"
+    state: directory
+    mode: "0755"
+
+- name: Create icons directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.icons"
+    state: directory
+    mode: "0755"
+
+- name: Copy over themes/icons
+  ansible.builtin.shell: |
+    cp -r /tmp/gruvbox-material-gtk/themes/* {{ home_dir }}/.themes/
+    cp -r /tmp/gruvbox-material-gtk/icons/* {{ home_dir }}/.icons/
   changed_when: true
