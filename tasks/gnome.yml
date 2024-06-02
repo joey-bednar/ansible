@@ -15,3 +15,28 @@
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ foreground-color '#dcdfe4'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ font 'DejaVuSansM Nerd Font Mono 12'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-system-font false
+
+- name: Install Gruvbox GTK Theme # noqa latest
+  ansible.builtin.git:
+    repo: "https://github.com/TheGreatMcPain/gruvbox-material-gtk"
+    dest: "/tmp/gruvbox-material-gtk"
+    clone: true
+    update: true
+
+- name: Create themes directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.themes"
+    state: directory
+    mode: "0755"
+
+- name: Create icons directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.icons"
+    state: directory
+    mode: "0755"
+
+- name: Copy over themes/icons
+  ansible.builtin.shell: |
+    cp -r /tmp/gruvbox-material-gtk/themes/* {{ home_dir }}/.themes/
+    cp -r /tmp/gruvbox-material-gtk/icons/* {{ home_dir }}/.icons/
+  changed_when: true

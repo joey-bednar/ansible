@@ -88,7 +88,7 @@
           tags:
             - gimp
 
-        - name: I3
+        - name: i3 # noqa name
           ansible.builtin.import_tasks: tasks/i3.yml
           tags:
             - i3
