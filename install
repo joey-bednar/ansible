@@ -13,13 +13,13 @@ if [[ -z $1 ]]; then
 	echo ""
 	echo "  personal        install everything"
 	echo "  work            install all work tasks"
-	echo "  vm              install all work tasks (minus kitty, plus i3)"
-	echo "  dev             install zsh,nvim"
+	echo "  vm              install all work tasks minus kitty"
+	echo "  dev             install zsh,nvim,tmux"
 	echo "  container       build a docker dev container"
 	echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
 	install_ansible
-	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty"
+	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty,i3"
 elif [[ $1 == "vm" ]]; then
 	install_ansible
 	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,i3"
@@ -30,7 +30,7 @@ elif [[ $1 == "container" ]]; then
 	echo "docker run --rm -it ansible"
 elif [[ $1 == "dev" ]]; then
 	install_ansible
-	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,nvim,node"
+	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node"
 elif [[ $1 == "personal" ]]; then
 	install_ansible
 	ansible-playbook main.yml -i localhost, -K
