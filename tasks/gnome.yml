@@ -1,10 +1,14 @@
 - name: Set wallpaper
   ansible.builtin.shell: |
     gsettings set org.gnome.desktop.background picture-uri file://{{ home_dir }}/ansible/wallpapers/ubuntu-background.jpg
+  tags:
+    - gnome
 
 - name: Set favorite apps
   ansible.builtin.shell: |
     gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','org.gnome.Terminal.desktop']"
+  tags:
+    - gnome
 
 - name: Set gnome terminal theme
   ansible.builtin.shell: |
@@ -15,6 +19,8 @@
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ foreground-color '#dcdfe4'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ font 'DejaVuSansM Nerd Font Mono 12'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileID/ use-system-font false
+  tags:
+    - gnome
 
 - name: Install Gruvbox GTK Theme # noqa latest
   ansible.builtin.git:
@@ -22,21 +28,29 @@
     dest: "/tmp/gruvbox-material-gtk"
     clone: true
     update: true
+  tags:
+    - gnome
 
 - name: Create themes directory
   ansible.builtin.file:
     path: "{{ home_dir }}/.themes"
     state: directory
     mode: "0755"
+  tags:
+    - gnome
 
 - name: Create icons directory
   ansible.builtin.file:
     path: "{{ home_dir }}/.icons"
     state: directory
     mode: "0755"
+  tags:
+    - gnome
 
 - name: Copy over themes/icons
   ansible.builtin.shell: |
     cp -r /tmp/gruvbox-material-gtk/themes/* {{ home_dir }}/.themes/
     cp -r /tmp/gruvbox-material-gtk/icons/* {{ home_dir }}/.icons/
   changed_when: true
+  tags:
+    - gnome

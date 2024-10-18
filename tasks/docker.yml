@@ -5,11 +5,15 @@
       - curl
       - ca-certificates
     state: present
+  tags:
+    - docker
 
 - name: Check if docker GPG key exists
   ansible.builtin.stat:
     path: "/etc/apt/keyrings/docker.asc"
   register: gpg_status
+  tags:
+    - docker
 
 - name: Add Docker official GPG key
   become: true
@@ -19,11 +23,15 @@
     chmod a+r /etc/apt/keyrings/docker.asc
   when: not gpg_status.stat.exists
   changed_when: not gpg_status.stat.exists
+  tags:
+    - docker
 
 - name: Check if Docker repo in apt sources
   ansible.builtin.stat:
     path: "/etc/apt/sources.list.d/docker.list"
   register: apt_sources_status
+  tags:
+    - docker
 
 - name: Add Docker repository to apt sources # noqa risky-shell-pipe
   become: true
@@ -34,6 +42,8 @@
       tee /etc/apt/sources.list.d/docker.list > /dev/null
   when: not apt_sources_status.stat.exists
   changed_when: not apt_sources_status.stat.exists
+  tags:
+    - docker
 
 - name: Update cache
   become: true
@@ -41,6 +51,8 @@
     force_apt_get: true
     update-cache: true
     state: present
+  tags:
+    - docker
 
 - name: Install Docker Engine
   become: true
@@ -52,12 +64,16 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: present
+  tags:
+    - docker
 
 - name: Create docker group
   become: true
   ansible.builtin.group:
     name: docker
     state: present
+  tags:
+    - docker
 
 - name: Add user to docker group
   become: true
@@ -65,3 +81,5 @@
     name: "{{ username }}"
     groups: docker
     append: true
+  tags:
+    - docker

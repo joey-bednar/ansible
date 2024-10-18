@@ -5,9 +5,19 @@
     clone: true
     update: true
     force: true
+  tags:
+    - fzf
+    - dotfiles
+    - zsh
+    - nvim
 
 - name: Install fzf
   ansible.builtin.shell: |
     cd {{ home_dir }}
     .fzf/install
   changed_when: true
+  tags:
+    - fzf
+    - dotfiles
+    - zsh
+    - nvim

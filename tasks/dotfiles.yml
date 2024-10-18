@@ -6,6 +6,8 @@
       - fontconfig
       - make
     state: present
+  tags:
+    - dotfiles
 
 - name: Download dotfiles # noqa latest
   ansible.builtin.git:
@@ -14,6 +16,8 @@
     clone: true
     update: true
     force: true
+  tags:
+    - dotfiles
 
 - name: Make dotfiles
   ansible.builtin.shell: |
@@ -21,20 +25,28 @@
     make update
     make setup
   changed_when: true
+  tags:
+    - dotfiles
 
 - name: Reload fonts
   ansible.builtin.command: fc-cache -f -v
   when: true
   changed_when: true
+  tags:
+    - dotfiles
 
 - name: Create personal directory
   ansible.builtin.file:
     path: "{{ home_dir }}/personal"
     state: directory
     mode: "0755"
+  tags:
+    - dotfiles
 
 - name: Create work directory
   ansible.builtin.file:
     path: "{{ home_dir }}/work"
     state: directory
     mode: "0755"
+  tags:
+    - dotfiles
