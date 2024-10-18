@@ -14,7 +14,7 @@ if [[ -z $1 ]]; then
 	echo "  personal        install everything"
 	echo "  work            install all work tasks"
 	echo "  vm              install all work tasks minus kitty"
-	echo "  dev             install zsh,nvim,tmux"
+	echo "  dev             install zsh,nvim,tmux,fzf"
 	echo "  container       build a docker dev container"
 	echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
@@ -40,5 +40,5 @@ elif [[ $1 == "test" ]]; then
 else
 	echo "Invalid option."
 	echo ""
-	./$0
+	./"$0"
 fi
