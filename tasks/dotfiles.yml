@@ -50,3 +50,27 @@
     mode: "0755"
   tags:
     - dotfiles
+
+- name: Check if nvim is installed
+  become: true
+  ansible.builtin.stat:
+    path: "/usr/bin/nvim"
+  register: nvim_status
+  tags:
+    - dotfiles
+
+- name: Install Neovim Plugins
+  ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
+  when: nvim_status.stat.exists
+  changed_when: nvim_status.stat.exists
+  tags:
+    - dotfiles
+
+- name: Check if zsh is installed
+  command: which zsh
+  register: zsh_installed
+  ignore_errors: yes
+
+- name: Source .zshrc
+  shell: source ~/.zshrc
+  when: zsh_installed.rc == 0

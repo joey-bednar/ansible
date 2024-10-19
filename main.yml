@@ -18,7 +18,6 @@
 
   tasks:
     - include: tasks/core.yml
-    - include: tasks/dotfiles.yml
     - include: tasks/zsh.yml
     - include: tasks/fzf.yml
     - include: tasks/tmux.yml
@@ -31,3 +30,5 @@
     - include: tasks/spotify.yml
     - include: tasks/gimp.yml
     - include: tasks/i3.yml
+
+    - include: tasks/dotfiles.yml

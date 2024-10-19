@@ -46,19 +46,3 @@
     update: true
   tags:
     - zsh
-
-- name: Check if dotfiles exists
-  ansible.builtin.stat:
-    path: "{{ home_dir }}/dotfiles"
-  register: dotfiles_status
-  tags:
-    - zsh
-
-- name: Use dotfiles .zshrc
-  ansible.builtin.shell: |
-    cd {{ home_dir }}/dotfiles
-    make update
-  when: dotfiles_status.stat.exists
-  changed_when: dotfiles_status.stat.exists
-  tags:
-    - zsh
