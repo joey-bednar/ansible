@@ -20,12 +20,9 @@ FROM base
 
 # run ansible install script
 COPY . /home/joey
-RUN ./install dev
 
-# source .zshrc
-SHELL ["/bin/zsh","-c"]
 ENV TERM=screen-256color
-RUN source ~/.zshrc
+RUN ./install dev
 
 # start container in zsh
 ENTRYPOINT ["/bin/zsh"]
