@@ -1,4 +1,4 @@
-FROM ubuntu:latest as base
+FROM ubuntu:jammy as base
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y update && \
