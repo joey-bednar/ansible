@@ -1,5 +1,4 @@
 - name: Configure git defaults # noqa command-instead-of-module
-  become: true
   ansible.builtin.shell: |
     git config --global user.name "Joseph Bednar"
     git config --global push.autoSetupRemote true

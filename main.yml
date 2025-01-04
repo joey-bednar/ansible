@@ -30,5 +30,6 @@
     - include: tasks/spotify.yml
     - include: tasks/gimp.yml
     - include: tasks/i3.yml
+    - include: tasks/git.yml
 
     - include: tasks/dotfiles.yml
