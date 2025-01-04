@@ -6,9 +6,3 @@
     state: present
   tags:
     - spotify
-
-- name: Add spotify to favorites
-  ansible.builtin.shell: |
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','kitty.desktop','spotify_spotify.desktop']"
-  tags:
-    - spotify

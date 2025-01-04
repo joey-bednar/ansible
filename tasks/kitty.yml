@@ -6,15 +6,3 @@
     state: present
   tags:
     - kitty
-
-- name: Add kitty as favorite
-  ansible.builtin.shell: |
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop','firefox_firefox.desktop','kitty.desktop']"
-  tags:
-    - kitty
-
-- name: Set kitty as default terminal
-  ansible.builtin.shell: |
-    gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
-  tags:
-    - kitty
