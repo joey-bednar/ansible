@@ -11,8 +11,7 @@
   become: true
   ansible.builtin.shell: |
     npm install -g n
-    n install lts
-    n use lts
+    n lts
   changed_when: true
   tags:
     - node
