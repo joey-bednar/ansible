@@ -1,10 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
 
 install_ansible() {
 	if [[ -z $(command -v ansible-playbook) ]]; then
 		sudo apt install ansible -y
 	fi
 }
+
+DEV_TAGS="dotfiles,zsh,tmux,nvim,node,git"
+VM_TAGS="${DEV_TAGS},docker,python,gnome,i3,k8s"
+WORK_TAGS="${VM_TAGS},kitty"
 
 if [[ -z $1 ]]; then
 	echo "usage: install [option]"
@@ -19,18 +26,18 @@ if [[ -z $1 ]]; then
 	echo "  test [tag]      install tasks with specified tag"
 elif [[ $1 == "work" ]]; then
 	install_ansible
-	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,kitty,i3,git"
+	ansible-playbook main.yml -i localhost, -K --tags "${WORK_TAGS}"
 elif [[ $1 == "vm" ]]; then
 	install_ansible
-	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,docker,python,gnome,i3,git"
+	ansible-playbook main.yml -i localhost, -K --tags "${VM_TAGS}"
 elif [[ $1 == "container" ]]; then
-	docker build -t "ansible" .
+	docker build -t "dev" .
 	echo ""
 	echo "Dev container built. Run using:"
-	echo "docker run --rm -it ansible"
+	echo "docker run --rm -it dev"
 elif [[ $1 == "dev" ]]; then
 	install_ansible
-	ansible-playbook main.yml -i localhost, -K --tags "dotfiles,zsh,tmux,nvim,node,git"
+	ansible-playbook main.yml -i localhost, -K --tags "${DEV_TAGS}"
 elif [[ $1 == "personal" ]]; then
 	install_ansible
 	ansible-playbook main.yml -i localhost, -K

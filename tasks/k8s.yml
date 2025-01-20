@@ -1,0 +1,55 @@
+- name: Install dependencies
+  become: true
+  ansible.builtin.apt:
+    name:
+      - curl
+    state: present
+  tags:
+    - k8s
+
+- name: Download latest kubectl binary # noqa command-instead-of-module
+  become: true
+  ansible.builtin.shell: |
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  args:
+    chdir: /usr/local/bin
+  changed_when: true
+  tags:
+    - k8s
+
+- name: Make kubectl executable
+  become: true
+  ansible.builtin.file:
+    path: /usr/local/bin/kubectl
+    mode: "0755"
+  tags:
+    - k8s
+
+
+- name: Download helm installer
+  become: true
+  ansible.builtin.shell: |
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  args:
+    chdir: /tmp
+  changed_when: true
+  tags:
+    - k8s
+
+- name: Make helm executable
+  become: true
+  ansible.builtin.file:
+    path: /tmp/get_helm.sh
+    mode: "0755"
+  tags:
+    - k8s
+
+
+- name: Download helm installer
+  ansible.builtin.shell: |
+    ./get_helm.sh
+  args:
+    chdir: /tmp
+  changed_when: true
+  tags:
+    - k8s
