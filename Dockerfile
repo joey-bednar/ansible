@@ -1,4 +1,4 @@
-FROM ubuntu:jammy as base
+FROM ubuntu:noble as base
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -y update && \

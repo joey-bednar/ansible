@@ -18,19 +18,63 @@
 
   tasks:
     - ansible.builtin.include_tasks: tasks/core.yml
-    - include: tasks/zsh.yml
-    - include: tasks/fzf.yml
-    - include: tasks/tmux.yml
-    - include: tasks/nvim.yml
-    - include: tasks/node.yml
-    - include: tasks/docker.yml
-    - include: tasks/python.yml
-    - include: tasks/gnome.yml
-    - include: tasks/kitty.yml
-    - include: tasks/spotify.yml
-    - include: tasks/gimp.yml
-    - include: tasks/i3.yml
-    - include: tasks/git.yml
-    - include: tasks/k8s.yml
 
-    - include: tasks/dotfiles.yml
+    - name: Zsh
+      ansible.builtin.include_tasks: tasks/zsh.yml
+      tags: ['zsh']
+
+    - name: Fzf
+      ansible.builtin.include_tasks: tasks/fzf.yml
+      tags: ['fzf']
+
+    - name: Tmux
+      ansible.builtin.include_tasks: tasks/tmux.yml
+      tags: ['tmux']
+
+    - name: Nvim
+      ansible.builtin.include_tasks: tasks/nvim.yml
+      tags: ['nvim']
+
+    - name: Node
+      ansible.builtin.include_tasks: tasks/node.yml
+      tags: ['node']
+
+    - name: Docker
+      ansible.builtin.include_tasks: tasks/docker.yml
+      tags: ['docker']
+
+    - name: Python
+      ansible.builtin.include_tasks: tasks/python.yml
+      tags: ['python']
+
+    - name: Gnome
+      ansible.builtin.include_tasks: tasks/gnome.yml
+      tags: ['gnome']
+
+    - name: Kitty
+      ansible.builtin.include_tasks: tasks/kitty.yml
+      tags: ['kitty']
+
+    - name: Spotify
+      ansible.builtin.include_tasks: tasks/spotify.yml
+      tags: ['spotify']
+
+    - name: Gimp
+      ansible.builtin.include_tasks: tasks/gimp.yml
+      tags: ['gimp']
+
+    - name: I3
+      ansible.builtin.include_tasks: tasks/i3.yml
+      tags: ['i3']
+
+    - name: Git
+      ansible.builtin.include_tasks: tasks/git.yml
+      tags: ['git']
+
+    - name: K8s
+      ansible.builtin.include_tasks: tasks/k8s.yml
+      tags: ['k8s']
+
+    - name: Dotfiles
+      ansible.builtin.include_tasks: tasks/dotfiles.yml
+      tags: ['dotfiles']

@@ -6,7 +6,7 @@
       - npm
       - curl
       - cargo
-      - python3.10-venv
+      - python3-venv
     state: present
   tags:
     - nvim
