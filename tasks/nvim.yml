@@ -21,7 +21,7 @@
 
 - name: Download Nvim
   ansible.builtin.get_url:
-    url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    url: "https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.appimage"
     dest: "{{ home_dir }}/nvim.appimage"
     mode: "u+x"
   when: not nvim_status.stat.exists
